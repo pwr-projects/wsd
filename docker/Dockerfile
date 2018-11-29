@@ -16,6 +16,7 @@ RUN svn co -q http://svn.clarin-pl.eu/svn/ijn_students/plwn_api /py_libs/plwn_ap
 RUN pip3 install -e /py_libs/plwn_api
 
 COPY requirements.txt /tmp/requirements.txt
+RUN pip3 install --upgrade cython
 RUN pip3 install -r /tmp/requirements.txt
 
 RUN mkdir /project
