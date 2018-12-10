@@ -1,8 +1,7 @@
-#!/usr/bin/env python3.5
+#!/usr/bin/env python
 
-from parser import *
+from wsd_parser import *
 
 
-
-# get_ft_word_embeddings()
-# get_sense_embeddings()
+get_ft_word_embeddings()
+get_sense_embeddings()
