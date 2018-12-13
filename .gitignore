@@ -105,3 +105,6 @@ venv.bak/
 .vscode
 clarin
 ajn_students
+
+project/data
+project/.tmp
