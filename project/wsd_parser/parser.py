@@ -73,3 +73,6 @@ def get_sense_embeddings():
         Archive(temp_archive_filename).extractall(unpack_path, True)
 
     return load_vectors(os.path.join(unpack_path, 'plwn-vectors-joined-rels.txt'))
+
+
+
