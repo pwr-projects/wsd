@@ -1,4 +1,6 @@
-gensim
-fasttext
+urllib3
+numpy
+scipy
+tqdm
 jupyter
-
+-e svn+http://svn.clarin-pl.eu/svn/ijn_students/plwn_api#egg=plwn-api
