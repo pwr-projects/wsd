@@ -24,6 +24,8 @@ def tag(sentence: str):
 		proc = Popen(' '.join(command), shell=True, stdout=PIPE)
 		output, _ = proc.communicate()
 		output = output.decode('utf-8')
+		output = [tuple(entry.strip().split('\t')) for entry in output.strip().split('\n')]
+		output = {u: (b, p) for u, b, p in output}
 		
 		return output
 
