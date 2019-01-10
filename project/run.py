@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #%%
-from wsd_parser import *
+from parsers import *
 
 parse_skladnica()
 # get_ft_word_embeddings()
