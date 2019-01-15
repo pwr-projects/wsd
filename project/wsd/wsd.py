@@ -8,15 +8,16 @@ from .utils import *
 
 
 class WSD:
-    def __init__(self, we, se, sw, wn):
+    def __init__(self, we, se, sw, wn, tqdm_disable=True):
         self._we = we
         self._se = se
         self._sw = sw
         self._wn = wn
+        self._tqdm_disable = tqdm_disable
 
     def _c_w(self, W_wout_W, disambiguated):
         def _get_vector(w):
-            return self._se.get_embedding(disambiguated[w]) if w in disambiguated.keys() else self._we.get_embedding(w)
+            return self._se[disambiguated[w]] if w in disambiguated.keys() else self._we[w]
         return np.average([_get_vector(w) for w in W_wout_W], axis=0)
 
     def _g_s(self, word, synset_id, use_related=True, *relations):
@@ -30,23 +31,26 @@ class WSD:
 
         gloss = set(gloss)
 
-        return np.average([self._we.get_embedding(w) for w in gloss], axis=0) if len(gloss) else 0.0
+        return np.average([self._we[w] for w in gloss], axis=0) if len(gloss) else 0.0
 
-    def wsd(self, text, use_related=True, relations=['hiperonimia', 'synonimia']):
+    def __call__(self, text, **kwargs):
+        return self.wsd(text, **kwargs)
+
+    def wsd(self, text, use_related=False, relations=['hiperonimia', 'synonimia']):
         usages = get_lemmas_dict(wcrft.tag(clean_text(text, self._sw)))
         usages = {k.lower(): v.lower() for k, v in usages.items()}
 
         W = usages.keys()
 
-        if(len(W) <= 1):
-            raise ValueError('Please provide a wider context to WSD!')
+        # assert len(W) > 1, 'Please provide a wider context to WSD!'
 
         best_senses = {}
+        sum_scores = 0.0
         ordered_W = list(sorted_by_senses_count(W, self._wn))
 
-        sum_scores = 0.0
-
-        for w in tqdm(ordered_W, 'Processing word and sense embeddings', leave=False):
+        for w in tqdm(ordered_W, 'Proc. word and sense emb.',
+                      leave=False, disable=self._tqdm_disable,
+                      dynamic_ncols=True):
             word_score = {}
             best_sense, best_score = None, 0.0
 
@@ -57,8 +61,8 @@ class WSD:
 
             for word, synset, gloss in self._wn.senses(w):
                 try:
-                    sense_emb = self._se.get_embedding(synset.id)
-                except ValueError:
+                    sense_emb = self._se[synset.id]
+                except (KeyError, ValueError):
                     continue
 
                 g_s = self._g_s(word, synset.id, use_related, *relations)
@@ -78,5 +82,4 @@ class WSD:
 
             sum_scores += best_score
 
-        mapped_best_senses = {usages[k]: (k, v) for k, v in best_senses.items()}
-        return mapped_best_senses
+        return {usages[k]: (k, v) for k, v in best_senses.items()}

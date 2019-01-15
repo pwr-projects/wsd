@@ -10,4 +10,4 @@ URL_SENSE_EMBEDDINGS = 'http://svn.clarin-pl.eu/svn/ijn_students/autoextend.7z'
 
 FILENAME_FASTTEXT_MODEL = 'ft-model'
 FILENAME_SENSE_EMBEDDINGS = 'se.pkl'
-FILENAME_SKLADNICA = 'skladnica.npy'
+FILENAME_SKLADNICA = lambda wsd_type: 'skladnica_{}.npy'.format(wsd_type)

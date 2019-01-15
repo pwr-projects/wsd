@@ -20,7 +20,7 @@ def get_senses(word: str, wn):
 
 def get_gloss(word: str, synset_id: int, sw, wn):
     gloss = get_senses(word, wn).get(synset_id)
-    gloss = clean_text(gloss, sw)
+    gloss = clean_text(gloss, sw) if gloss else None
     return get_lemmas_dict(wcrft.tag(gloss)).keys() if gloss else None
 
 
@@ -41,7 +41,7 @@ def related_syn_ids(word, synset_id, wn, *relations):
     if related:
         related = chain(*[v for k, v in related[0].items()
                           for relation in relations if k.startswith(relation)])
-        return [int(r) for r in related]
+    return [int(r) for r in related]
 
 
 def glosses_from_syn_ids(syn_ids, wn, sw):

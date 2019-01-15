@@ -10,7 +10,7 @@ class RemoteWordEmbedding:
         self._address = address
         self._http = urllib3.PoolManager()
 
-    def get_embedding(self, word):
+    def __getitem__(self, word):
         word = quote(word)
         target = '{addr}/word_emb/{word}'.format(addr=self._address, word=word)
         data = self._http.request('GET', target)
@@ -26,7 +26,7 @@ class RemoteSenseEmbedding:
         self._address = address
         self._http = urllib3.PoolManager()
 
-    def get_embedding(self, synset_id):
+    def __getitem__(self, synset_id):
         target = '{addr}/sense_emb/{synset_id}'.format(addr=self._address, synset_id=synset_id)
         data = self._http.request('GET', target)
         if data.status == 200:

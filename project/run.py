@@ -2,13 +2,7 @@
 #%%
 from parsers import *
 
-parse_skladnica()
+parse_skladnica(WSDParseType.wsd)
+parse_skladnica(WSDParseType.kdb)
 # get_ft_word_embeddings()
 # get_sense_embeddings()
-#%%
-data = load_skladnica()
-
-
-#%%
-len(data)
-#%%
