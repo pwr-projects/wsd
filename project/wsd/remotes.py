@@ -1,4 +1,5 @@
 import ast
+from enum import Enum
 from urllib.parse import quote
 
 import urllib3

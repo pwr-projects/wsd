@@ -75,4 +75,3 @@ def get_sense_embeddings():
     return load_vectors(os.path.join(unpack_path, 'plwn-vectors-joined-rels.txt'))
 
 
-

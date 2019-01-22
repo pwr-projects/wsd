@@ -10,7 +10,8 @@ class Wordnet:
 
     def _valid_lexical_units(self):
         return [(lu.lemma, lu.synset, lu.definition) for lu in
-                tqdm(self._wordnet.lexical_units(), desc='Filtering polish', leave=False) if lu.is_polish]
+                tqdm(self._wordnet.lexical_units(), desc='Filtering polish', leave=False, dynamic_ncols=True)
+                if lu.is_polish]
 
     def senses(self, word):
         return [lu for lu in self._lexical_units if lu[0] == word]

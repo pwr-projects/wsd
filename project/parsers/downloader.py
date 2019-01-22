@@ -25,7 +25,7 @@ def download(url: str, out_path: str):
             chunk, i = 1024, 0
             num_bars = int(file_size / chunk)
 
-            with tqdm(r.iter_content(chunk), total=num_bars, unit='kB') as bar:
+            with tqdm(r.iter_content(chunk), total=num_bars, unit='kB', dynamic_ncols=True) as bar:
                 for chunk in bar:
                     f.write(chunk)
                     bar.update()
