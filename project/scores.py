@@ -14,3 +14,5 @@ show_scores('skladnica_related')
 show_scores('kpwr')
 #%%
 show_scores('kpwr_related')
+
+#%%

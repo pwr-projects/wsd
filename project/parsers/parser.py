@@ -2,7 +2,8 @@
 import os
 import re
 
-import gensim.models.fasttext as ft
+# import gensim.models.fasttext as ft
+import fastText as ft
 import numpy as np
 from pyunpack import Archive
 from tqdm import tqdm
@@ -73,5 +74,3 @@ def get_sense_embeddings():
         Archive(temp_archive_filename).extractall(unpack_path, True)
 
     return load_vectors(os.path.join(unpack_path, 'plwn-vectors-joined-rels.txt'))
-
-

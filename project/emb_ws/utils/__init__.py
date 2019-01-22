@@ -1,1 +1,1 @@
-from loaders import *
+from .loaders import *

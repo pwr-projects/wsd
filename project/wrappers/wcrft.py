@@ -1,8 +1,7 @@
 import os
 import tempfile
-from subprocess import PIPE, Popen
-
 from itertools import chain
+from subprocess import PIPE, Popen
 
 
 def tag(*sentences: str):
@@ -14,12 +13,11 @@ def tag(*sentences: str):
         with os.fdopen(fd, 'w') as tmp:
             tmp.writelines(map(lambda text: text + '\n' * 3, sentences))
 
-        command=[
-            'wcrft',
+        command = [
+            'wcrft-app',
             'nkjp_e2.ini',
-            '-C',
             '-d',
-            '/usr/local/lib/python2.7/dist-packages/wcrft-1.0.0-py2.7.egg/wcrft/model/model_nkjp10_wcrft_e2/',
+            '/usr/local/share/wcrft/model/model_nkjp10_wcrft_e2/',
             '-i',
             'txt',
             path,
@@ -27,12 +25,12 @@ def tag(*sentences: str):
             'iob-chan'
         ]
 
-        proc=Popen(' '.join(command), shell=True, stdout=PIPE)
-        output, _=proc.communicate()
-        output=output.decode('utf-8').strip().split('\n' * 2)
-        output=[entry.strip().split('\n') for entry in output]
-        output=[entry.strip().split('\t') for entry in chain(*output)]
-        output={u: (b, p) for u, b, p in output}
+        proc = Popen(' '.join(command), shell=True, stdout=PIPE)
+        output, _ = proc.communicate()
+        output = output.decode('utf-8').strip().split('\n' * 2)
+        output = [entry.strip().split('\n') for entry in output]
+        output = [entry.strip().split('\t') for entry in chain(*output)]
+        output = {u: (b, p) for u, b, p in output}
         return output
 
     finally:

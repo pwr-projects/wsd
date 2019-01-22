@@ -1,6 +1,7 @@
 import ast
 from enum import Enum
 from urllib.parse import quote
+from emb_ws.start_emb import get_we, get_se
 
 import urllib3
 
@@ -35,3 +36,11 @@ class RemoteSenseEmbedding:
         else:
             raise ValueError('A problem occured during getting an embedding for synset id: {synset_id}...'.format(
                 synset_id=synset_id))
+
+
+class LocalEmb:
+    def __init__(self, fun):
+        self._fun = fun
+
+    def __getitem__(self, excel):
+        return self._fun(excel)
